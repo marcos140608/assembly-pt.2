@@ -1,0 +1,76 @@
+.data
+msg1: .asciiz "Digite a nota do primero bimestre: "
+msg2: .asciiz "Digite a nota segundo do primero bimestre: "
+msg3: .asciiz "Digite a nota do terceiro bimestre: "
+msg4: .asciiz "Digite a nota do quarto bimestre: "
+msg5: .asciiz "A média é: "
+msg6: .asciiz "Parabéns, você foi aprovado"
+msg7: .asciiz "Você ficou para o exame"
+msg8: .asciiz "Você foi reprovado"
+.text
+.globl main
+main:
+
+	li $v0, 4
+	la $a0, msg1
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t0, $v0
+	
+	li $v0, 4
+	la $a0, msg2
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t1, $v0
+	
+	li $v0, 4
+	la $a0, msg3
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t2, $v0
+	
+	li $v0, 4
+	la $a0, msg4
+	syscall
+	
+	li $v0, 5
+	syscall
+	move $t3, $v0
+	
+	add $t4, $t0, $t1
+	add $t5, $t2, $t3
+	add $t6, $t4, $t5
+	
+	li $t7, 4
+	
+	div $t8, $t6, $t7
+	
+	
+	bge $t8, 6, aprovado
+	bge $t8, 3, exame
+	j reprovado
+	
+	aprovado:
+		li $v0, 4
+    		la $a0, msg6
+    		syscall
+	
+		j fim_comparacao
+	exame:
+		li $v0, 4
+    		la $a0, msg7
+    		syscall
+    		
+    		j fim_comparacao
+    	reprovado:
+    		li $v0, 4
+    		la $a0, msg8
+    		syscall
+	fim_comparacao:
+	
