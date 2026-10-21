@@ -1,0 +1,63 @@
+.data
+msg1: .asciiz "Digite uma comprimento: "
+msg2: .asciiz "Digite uma largura: "
+msg3: .asciiz "Digite uma altura: "
+msg4: .asciiz "O volume é: "
+
+.globl main
+.text
+main: 
+	#pega o v0 e adiciona a função 4, que imprime uma string
+	li $v0, 4
+	#da o endereço da mensagem para o registrador a0
+    	la $a0, msg1
+    	#realiza a instrução do código acima
+    	syscall
+    	
+    	#pega o v0 e adiciona a função 5, que le número inteiros
+    	li $v0, 5
+    	#realiza a operação acima
+    	syscall
+    	#move o valor que está em v0 e adiciona ao t0
+    	move $t0, $v0
+
+
+	# refaz tudo acima
+    	li $v0, 4
+    	la $a0, msg2
+    	syscall
+    
+    	li $v0, 5
+    	syscall
+    	move $t1, $v0
+    	
+    	li $v0, 4
+    	la $a0, msg3
+    	syscall
+
+    	li $v0, 5
+    	syscall
+    	move $t2, $v0
+	
+	#Faz a multiplicação
+	mul $t3,$t0,$t1
+    	mul $t4,$t3,$t2
+    	
+    	
+    	li $v0, 4
+    	la $a0, msg4
+    	syscall
+    	
+    	li $v0, 4
+	la $a0, msg4        
+	syscall
+    	
+    	#mostra para o sistema operacional que o proximo valor que vai mostrar é inteiro
+	li $v0, 1
+	#move o que está no t4 e move pro a0, porque o syscall só le o que está no a0          
+	move $a0, $t4     
+	syscall
+	#informa que o código deu bom
+	li $v0, 10
+	syscall
+    	
